@@ -10,6 +10,8 @@
 <body>
     <div class="wrapper">
         <div class="navbar">
+            <div class="navbar--bg closable"></div>
+            <div class="navbar--close closable">X</div>
             <div class="navbar__logo">
                 <span>Acknowledge <strong>Indonesia</strong></span>
             </div>
@@ -52,6 +54,9 @@
 
 <script>
     var navbarLinks = document.querySelector('.navbar__links')
+    var navbarBg = document.querySelector('.navbar--bg')
+    var navbarClose = document.querySelector('.navbar--close')
+    var closeable = document.querySelectorAll('.closable')
 
     function menuIsClicked(elmnt){
         elmnt.addEventListener('click',()=>{
@@ -59,15 +64,33 @@
 
             if(navbarLinks.classList.contains('navbar__links--disabled')){
                 navbarLinks.style.transform = 'translate(-100%,0)'  
-                navbarLinks.style.transition = 'transform 1s'
+                navbarLinks.style.transition = 'transform .5s'
             }else{
                 navbarLinks.style.transform = 'translate(0,0)'  
-                navbarLinks.style.transition = 'transform 1s'
+                navbarLinks.style.transition = 'transform .5s'
+
+                // Darkening Background
+                navbarBg.style.visibility = 'visible'
+                navbarBg.style.opacity = 1
+                navbarBg.style.transition = 'visibility .5s,opacity .5s'
+
+                navbarClose.style.visibility = 'visible'
             }
         })
     }
 
-    menuIsClicked(document.querySelector('.navbar__menu'))
+    function closeIsClicked(){
+        navbarBg.style.visibility = 'hidden'
+        navbarBg.style.opacity = 0
+        navbarBg.style.transition = 'visibility .5s,opacity .5s'
+
+        navbarLinks.style.transform = 'translate(-100%,0)'  
+        navbarLinks.style.transition = 'transform .5s'
+
+        navbarClose.style.visibility = 'hidden'
+
+        navbarLinks.classList.toggle('navbar__links--disabled')
+    }
 
     window.addEventListener('resize',()=>{
         let curWidth = window.innerWidth
@@ -80,10 +103,24 @@
             navbarLinks.style.transform = 'translate(0,0)'
             navbarLinks.style.transition = 'none'
 
-
+            navbarBg.style.visibility = 'hidden'
+            navbarBg.style.opacity = 0
+            navbarBg.style.transition = 'visibility .5s,opacity .5s'
+            navbarClose.style.visibility = 'hidden'
         }else{
             navbarLinks.style.transform = 'translate(-100%,0)'
             navbarLinks.style.transition = 'none'
+
+            navbarBg.style.visibility = 'hidden'
+            navbarBg.style.opacity = 0
+            navbarBg.style.transition = 'visibility .5s,opacity .5s'
+            navbarClose.style.visibility = 'hidden'
         }
     })
+
+    closeable.forEach(dom => {
+        dom.addEventListener('click',closeIsClicked)
+    })
+
+    menuIsClicked(document.querySelector('.navbar__menu'))
 </script>
