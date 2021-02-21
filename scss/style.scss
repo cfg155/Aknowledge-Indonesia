@@ -103,6 +103,23 @@ html {
     }
 
     .banner {
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('../assets/bg.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: bottom;
+            z-index: -1;
+            overflow: hidden;
+        }
+
         &__container {
             display: grid;
             grid-template-columns: 1fr 1fr;
